@@ -4,7 +4,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	logger "github.com/code7unner/rest-api-template/logger"
+	"github.com/code7unner/vk-scrapper/logger"
 	"go.opencensus.io/plugin/ochttp"
 	"net"
 	"net/http"

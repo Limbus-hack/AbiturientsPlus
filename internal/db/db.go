@@ -3,7 +3,7 @@ package db
 import (
 	"context"
 	"fmt"
-	"github.com/code7unner/rest-api-template/config"
+	"github.com/code7unner/vk-scrapper/config"
 	"github.com/jackc/pgx/v4"
 )
 

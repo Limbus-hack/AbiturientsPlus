@@ -1,6 +1,6 @@
 package controller
 
-import "github.com/code7unner/rest-api-template/internal/app"
+import "github.com/code7unner/vk-scrapper/internal/app"
 
 type Controller struct {
 	Posts PostsController

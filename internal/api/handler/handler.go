@@ -1,8 +1,8 @@
 package handler
 
 import (
-	"github.com/code7unner/rest-api-template/internal/api/controller"
-	"github.com/code7unner/rest-api-template/internal/app"
+	"github.com/code7unner/vk-scrapper/internal/api/controller"
+	"github.com/code7unner/vk-scrapper/internal/app"
 	"github.com/go-chi/chi"
 	"github.com/rs/cors"
 	"net/http"

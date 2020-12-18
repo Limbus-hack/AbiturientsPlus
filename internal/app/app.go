@@ -2,8 +2,8 @@ package app
 
 import (
 	"context"
-	"github.com/code7unner/rest-api-template/config"
-	"github.com/code7unner/rest-api-template/internal/api/repository"
+	"github.com/code7unner/vk-scrapper/config"
+	"github.com/code7unner/vk-scrapper/internal/api/repository"
 	"go.uber.org/zap"
 )
 
@@ -19,6 +19,6 @@ func New(log *zap.SugaredLogger, conf config.CommonEnvConfigs, repo *repository.
 		Log:  log,
 		Conf: conf,
 		Repo: repo,
-		Ctx: ctx,
+		Ctx:  ctx,
 	}
 }
