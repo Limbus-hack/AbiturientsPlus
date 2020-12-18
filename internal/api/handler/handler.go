@@ -25,7 +25,7 @@ func New(app *app.App) *Handler {
 
 	ctrl := controller.New(app)
 	r.Handle("/static", http.StripPrefix("/static", http.FileServer(http.Dir("./public"))))
-	r.MethodFunc("GET", "/ping", ctrl.Posts.Ping)
+	r.MethodFunc("GET", "/ping", ctrl.Vk.Ping)
 
 	return &Handler{
 		Mux: r,

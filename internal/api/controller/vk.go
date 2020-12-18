@@ -5,7 +5,7 @@ import (
 	"net/http"
 )
 
-type PostsController interface {
+type VkController interface {
 	GetByID(w http.ResponseWriter, r *http.Request)
 	GetAll(w http.ResponseWriter, r *http.Request)
 	Create(w http.ResponseWriter, r *http.Request)
@@ -13,26 +13,26 @@ type PostsController interface {
 	Ping(w http.ResponseWriter, r *http.Request)
 }
 
-type postsCtrl struct {
+type vkCtrl struct {
 	app *app.App
 }
 
-func NewPostsController(app *app.App) PostsController {
-	return &postsCtrl{app}
+func NewVkController(app *app.App) VkController {
+	return &vkCtrl{app}
 }
 
-func (p postsCtrl) GetByID(w http.ResponseWriter, r *http.Request) {
+func (p vkCtrl) GetByID(w http.ResponseWriter, r *http.Request) {
 	panic("implement me")
 }
 
-func (p postsCtrl) GetAll(w http.ResponseWriter, r *http.Request) {
+func (p vkCtrl) GetAll(w http.ResponseWriter, r *http.Request) {
 	panic("implement me")
 }
 
-func (p postsCtrl) Create(w http.ResponseWriter, r *http.Request) {
+func (p vkCtrl) Create(w http.ResponseWriter, r *http.Request) {
 	panic("implement me")
 }
 
-func (p postsCtrl) Ping(w http.ResponseWriter, r *http.Request) {
+func (p vkCtrl) Ping(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte("ping"))
 }
