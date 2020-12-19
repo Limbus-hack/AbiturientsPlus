@@ -38,7 +38,7 @@ func (b *Background) Start(ctx context.Context) {
 		case <-ctx.Done():
 			return
 		default:
-			groupIDs := []string{"dayvinchik", "mudakoff", "smeyaka", "tnull", "typ_math", "club127619163"}
+			groupIDs := []string{"math.humor", "alexei_savvateev", "egeoge_math", "umschmath"}
 			vkID := make(chan int, bufSize)
 			wg := sync.WaitGroup{}
 			for _, id := range groupIDs {
