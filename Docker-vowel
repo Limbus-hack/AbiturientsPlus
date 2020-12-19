@@ -1,7 +1,0 @@
-FROM python:3.7-alpine
-RUN mkdir -p /scripts
-COPY vowpal.sh /scripts/vowpal.sh
-COPY train-model/vw.model /scripts/vw.model
-WORKDIR /scripts
-RUN chmod +x vowpal.sh
-RUN ./vowpal.sh

@@ -4,5 +4,4 @@ daemon_start:
 
 .PHONY: daemon_stop
 daemon_stop:
-	for port in 58000
-	do pkill -9 -f `vw.*--port $port`
+	pkill -9 -f `vw.*--port 58000`

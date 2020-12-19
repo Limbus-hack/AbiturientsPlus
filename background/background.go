@@ -43,7 +43,7 @@ func (b *Background) Start(ctx context.Context) {
 		case <-ticker.C:
 			ticker.Stop()
 			//"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"
-			groupIDs := []string{"antohalove"}
+			groupIDs := []string{"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"}
 			vkID := make(chan int, bufSize)
 			for _, id := range groupIDs {
 				offset := 0

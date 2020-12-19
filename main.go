@@ -36,9 +36,9 @@ func main() {
 
 	// Init vowpal wabbit
 	v, err := vw.NewVwStorage()
-	//if err != nil {
-	//	log.Fatal(err)
-	//}
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	// Init app logic
 	a := app.New(log, conf, r, ctx, v)
