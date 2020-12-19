@@ -13,6 +13,8 @@ import (
 type PredictionController interface {
 	GetInRealTime(w http.ResponseWriter, r *http.Request)
 	Get(w http.ResponseWriter, r *http.Request)
+	GetCached(w http.ResponseWriter, r *http.Request)
+	UpdateStatus(w http.ResponseWriter, r *http.Request)
 }
 
 type PredictionCtrl struct {
@@ -58,11 +60,41 @@ func (p PredictionCtrl) GetInRealTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
-	print("fuck niggers")
+	cityKey, _ := r.URL.Query()["city"]
+	if cityKey == nil {
+		p.error(w, r, http.StatusBadRequest, errors.New("city query is required"))
+	}
+	schoolKey, _ := r.URL.Query()["city"]
+	if cityKey == nil {
+		p.error(w, r, http.StatusBadRequest, errors.New("school query is required"))
+	}
+	city, _ := strconv.Atoi(cityKey[0])
+	school, _ := strconv.Atoi(schoolKey[0])
+
+	users, err := p.app.Repo.Users.Retrieve(p.app.Ctx, city, school)
+	if err != nil {
+		p.error(w, r, http.StatusInternalServerError, err)
+	}
+	p.respond(w, r, http.StatusCreated, users)
 }
 
 func (p PredictionCtrl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
-	print("fuck niggers")
+	type Status struct {
+		UserId int64
+		Status string
+	}
+	var status Status
+	body, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		p.error(w, r, http.StatusInternalServerError, err)
+	}
+	json.Unmarshal(body, status)
+	rowsUpdated, err := p.app.Repo.Users.Update(p.app.Ctx, status.UserId, status.Status)
+	if err != nil {
+		p.error(w, r, http.StatusInternalServerError, err)
+	}
+	p.respond(w, r, http.StatusCreated, rowsUpdated)
 }
 
 // respond with error

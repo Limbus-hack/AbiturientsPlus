@@ -10,6 +10,8 @@ import (
 
 type Users interface {
 	Create(ctx context.Context, user *model.User) (int, error)
+	Update(ctx context.Context, id int64, status string) (int, error)
+	Retrieve(ctx context.Context, city int, school int) ([]model.User, error)
 }
 
 type usersImpl struct {

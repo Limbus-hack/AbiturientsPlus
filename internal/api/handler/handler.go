@@ -27,6 +27,7 @@ func New(app *app.App) *Handler {
 	r.Handle("/static", http.StripPrefix("/static", http.FileServer(http.Dir("./public"))))
 	r.MethodFunc("GET", "/ping", ctrl.Vk.Ping)
 	r.MethodFunc("POST", "/prediction", ctrl.Prediction.Get)
+	r.MethodFunc("PATCH", "/status", ctrl.Prediction.UpdateStatus)
 
 	return &Handler{
 		Mux: r,
