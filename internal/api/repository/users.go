@@ -63,3 +63,41 @@ func (u usersImpl) Update(ctx context.Context, id int64, status string) (int, er
 
 	return UpdatedRows, nil
 }
+
+func (u usersImpl) Retrieve(ctx context.Context, city int, school int) ([]model.User, error) {
+	sql := `select * from users where region= $1, prediction= $2`
+
+	var users []model.User
+
+	rows, err := u.db.Query(
+		ctx,
+		sql,
+		city,
+		school,
+	)
+	if err != nil {
+		return nil, err
+	}
+	defer rows.Close()
+
+	for rows.Next() {
+		var user model.User
+		if err := rows.Scan(
+			&user.ID,
+			&user.Name,
+			&user.LastName,
+			&user.Region,
+			&user.Prediction,
+			&user.Status); err != nil {
+			return nil, err
+		}
+		users = append(users, user)
+		if err := rows.Err(); err != nil {
+			return nil, err
+		}
+	}
+
+	u.log.Info("Retrieved rows")
+
+	return users, nil
+}
