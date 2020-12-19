@@ -11,7 +11,7 @@ import (
 )
 
 type PredictionController interface {
-	GetWithFilter(w http.ResponseWriter, r *http.Request)
+	GetInRealTime(w http.ResponseWriter, r *http.Request)
 	Get(w http.ResponseWriter, r *http.Request)
 }
 
@@ -38,7 +38,7 @@ func (p PredictionCtrl) Get(w http.ResponseWriter, r *http.Request) {
 	p.respond(w, r, http.StatusOK, predict)
 }
 
-func (p PredictionCtrl) GetWithFilter(w http.ResponseWriter, r *http.Request) {
+func (p PredictionCtrl) GetInRealTime(w http.ResponseWriter, r *http.Request) {
 	keys, _ := r.URL.Query()["city"]
 	if keys == nil {
 		p.error(w, r, http.StatusBadRequest, errors.New("city query is required"))
@@ -57,6 +57,14 @@ func (p PredictionCtrl) GetWithFilter(w http.ResponseWriter, r *http.Request) {
 	}
 
 	p.respond(w, r, http.StatusOK, subs)
+}
+
+func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
+	print("fuck niggers")
+}
+
+func (p PredictionCtrl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
+	print("fuck niggers")
 }
 
 // respond with error
