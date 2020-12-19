@@ -99,6 +99,7 @@ func (b *Background) sender(vkID chan int) {
 				Status:     "new",
 			}
 
+			b.app.Log.Info("got user")
 			_, err = b.app.Repo.Users.Create(b.app.Ctx, user)
 			if err != nil {
 				b.app.Log.Warn(err)
