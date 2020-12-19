@@ -71,20 +71,25 @@ func (b *Background) sender(vkID chan int) {
 				return
 			}
 
+			b.app.Log.Info("getVkProfile")
 			profile, err := b.getVkProfile(id)
 			if err != nil {
 				continue
 			}
+
+			b.app.Log.Info("getVkGroup")
 			group, err := b.getVkGroup(id)
 			if err != nil {
 				continue
 			}
 
+			b.app.Log.Info("buildString")
 			str, err := b.buildString(profile, group)
 			if err != nil {
 				continue
 			}
 
+			b.app.Log.Info("Predict")
 			res, err := b.app.Vws.Predict(str)
 			if err != nil {
 				continue
