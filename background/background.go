@@ -49,11 +49,11 @@ func (b *Background) Start(ctx context.Context) {
 				offset := 0
 				wg.Add(1)
 				go b.getVkIDs(vkID, id, offset, &wg)
-				go func() {
-					wg.Wait()
-					close(vkID)
-				}()
 			}
+			go func() {
+				wg.Wait()
+				close(vkID)
+			}()
 
 			b.wg.Add(1)
 			go b.sender(vkID)
