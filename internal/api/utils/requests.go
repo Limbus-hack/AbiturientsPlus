@@ -13,8 +13,8 @@ type UserRequest struct {
 	Fields   string
 }
 
-func (u UserRequest) String() string {
-	return fmt.Sprintf("%s%d&count=%d&access_token=%s&city=%d&v=5.21&age_from=%d&age_to=%d&fields=%s",
+func (u UserRequest) String(q rune) string {
+	return fmt.Sprintf("%s%d&count=%d&access_token=%s&city=%d&v=5.21&age_from=%d&age_to=%d&fields=%s&q=%s",
 		u.Endpoint,
 		u.Sort,
 		u.Count,
@@ -22,5 +22,6 @@ func (u UserRequest) String() string {
 		u.City,
 		u.AgeFrom,
 		u.AgeTo,
-		u.Fields)
+		u.Fields,
+		string(q))
 }

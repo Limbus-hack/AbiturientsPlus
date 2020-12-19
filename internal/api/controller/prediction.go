@@ -3,7 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"errors"
-	"github.com/code7unner/vk-scrapper/internal/api/repository"
+	"github.com/code7unner/vk-scrapper/internal/api/service"
 	"github.com/code7unner/vk-scrapper/internal/app"
 	"github.com/code7unner/vk-scrapper/vw"
 	"io/ioutil"
@@ -52,10 +52,13 @@ func (p PredictionCtrl) GetWithFilter(w http.ResponseWriter, r *http.Request) {
 	}
 	city, _ := strconv.Atoi(keys[0])
 	//school := keys[1]
-	vkUserImpl := repository.NewVkUserImpl(p.app.Conf)
-	users, err := vkUserImpl.GetVkUsers(city)
+	users, err := service.GetVkUsers(city, &p.app.Conf)
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
+	}
+	var globalCount int64
+	for i := 0; i < 33; i++ {
+		globalCount += users[i].Response.Count
 	}
 	p.respond(w, r, http.StatusOK, users)
 }
