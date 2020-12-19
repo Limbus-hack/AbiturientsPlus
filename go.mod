@@ -8,8 +8,6 @@ require (
 	github.com/jackc/pgx/v4 v4.10.0
 	github.com/lib/pq v1.9.0 // indirect
 	github.com/rs/cors v1.7.0
-	gitlab.com/opennota/morph v1.0.1
-	go.mongodb.org/mongo-driver v1.4.4
 	go.opencensus.io v0.22.5
 	go.uber.org/zap v1.16.0
 )
