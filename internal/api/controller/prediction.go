@@ -41,11 +41,12 @@ func (p PredictionCtrl) Get(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p PredictionCtrl) GetInRealTime(w http.ResponseWriter, r *http.Request) {
-	keys, _ := r.URL.Query()["city"]
-	if keys == nil {
+	params := r.URL.Query()
+	keys, ok := params["city"]
+	if !ok {
 		p.error(w, r, http.StatusBadRequest, errors.New("city query is required"))
-		return
 	}
+
 	city, _ := strconv.Atoi(keys[0])
 	users, err := service.GetVkUsers(city, &p.app.Conf)
 	if err != nil {
@@ -60,14 +61,16 @@ func (p PredictionCtrl) GetInRealTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
-	cityKey, _ := r.URL.Query()["city"]
-	if cityKey == nil {
+	params := r.URL.Query()
+	cityKey, ok := params["city"]
+	if !ok {
 		p.error(w, r, http.StatusBadRequest, errors.New("city query is required"))
 	}
-	schoolKey, _ := r.URL.Query()["city"]
-	if cityKey == nil {
+	schoolKey, ok := params["school"]
+	if !ok {
 		p.error(w, r, http.StatusBadRequest, errors.New("school query is required"))
 	}
+
 	city, _ := strconv.Atoi(cityKey[0])
 	school, _ := strconv.Atoi(schoolKey[0])
 
@@ -75,6 +78,7 @@ func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
+
 	p.respond(w, r, http.StatusCreated, users)
 }
 
@@ -85,15 +89,19 @@ func (p PredictionCtrl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
 	}
 	var status Status
 	body, err := ioutil.ReadAll(r.Body)
-	defer r.Body.Close()
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
-	json.Unmarshal(body, status)
+	defer r.Body.Close()
+
+	if err := json.Unmarshal(body, &status); err != nil {
+		p.error(w, r, http.StatusInternalServerError, err)
+	}
 	rowsUpdated, err := p.app.Repo.Users.Update(p.app.Ctx, status.UserId, status.Status)
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
+
 	p.respond(w, r, http.StatusCreated, rowsUpdated)
 }
 
