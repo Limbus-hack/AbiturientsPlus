@@ -9,6 +9,7 @@ import (
 	"github.com/code7unner/vk-scrapper/internal/interrupt"
 	"github.com/code7unner/vk-scrapper/internal/server"
 	"github.com/code7unner/vk-scrapper/logger"
+	"github.com/code7unner/vk-scrapper/vw"
 )
 
 func main() {
@@ -31,8 +32,14 @@ func main() {
 	// Init repository
 	r := repository.New(database.Conn, log, conf)
 
+	// Init vowpal wabbit
+	v, err := vw.NewVwStorage()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	// Init app logic
-	a := app.New(log, conf, r, ctx)
+	a := app.New(log, conf, r, ctx, v)
 
 	// Init handler
 	h := handler.New(a)
