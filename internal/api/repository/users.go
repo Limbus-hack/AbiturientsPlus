@@ -10,7 +10,7 @@ import (
 
 type Users interface {
 	Create(ctx context.Context, user *model.User) (int, error)
-	Update(ctx context.Context, id int64, status string) (int, error)
+	Update(ctx context.Context, id int, status string) (int, error)
 	Retrieve(ctx context.Context, city int, school int) ([]model.User, error)
 }
 
@@ -45,7 +45,7 @@ func (u usersImpl) Create(ctx context.Context, user *model.User) (int, error) {
 	return id, nil
 }
 
-func (u usersImpl) Update(ctx context.Context, id int64, status string) (int, error) {
+func (u usersImpl) Update(ctx context.Context, id int, status string) (int, error) {
 	sql := `update users set status = $1 where id = $2`
 
 	var updatedRows int
@@ -54,7 +54,7 @@ func (u usersImpl) Update(ctx context.Context, id int64, status string) (int, er
 		sql,
 		status,
 		id,
-	).Scan(&updatedRows)
+	).Scan()
 	if err != nil {
 		return 0, err
 	}
@@ -65,7 +65,7 @@ func (u usersImpl) Update(ctx context.Context, id int64, status string) (int, er
 }
 
 func (u usersImpl) Retrieve(ctx context.Context, city int, school int) ([]model.User, error) {
-	sql := `select * from users where region = $1, prediction = $2`
+	sql := `select * from users where region = $1 and prediction = $2`
 
 	var users []model.User
 

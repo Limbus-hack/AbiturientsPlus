@@ -83,21 +83,17 @@ func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p PredictionCtrl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
-	type Status struct {
-		UserId int64
-		Status string
+	var req struct {
+		Id     int    `json:"id"`
+		Status string `json:"status"`
 	}
-	var status Status
-	body, err := ioutil.ReadAll(r.Body)
-	if err != nil {
+
+	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
 	defer r.Body.Close()
 
-	if err := json.Unmarshal(body, &status); err != nil {
-		p.error(w, r, http.StatusInternalServerError, err)
-	}
-	rowsUpdated, err := p.app.Repo.Users.Update(p.app.Ctx, status.UserId, status.Status)
+	rowsUpdated, err := p.app.Repo.Users.Update(p.app.Ctx, req.Id, req.Status)
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
