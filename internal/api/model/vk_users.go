@@ -5,6 +5,8 @@ type Item struct {
 	Id        int64  `json:"id"`
 	LastName  string `json:"last_name"`
 	TrackCode string `json:"track_code"`
+	Sex       int    `json:"sex"`
+	Interests string `json:"interests"`
 }
 
 type Response struct {

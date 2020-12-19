@@ -29,6 +29,7 @@ func (p vkUsersImpl) GetVkUsers(city int) (model.VkUsers, error) {
 		Sort:     1,
 		AgeFrom:  16,
 		AgeTo:    18,
+		Fields:   "sex,interests",
 	}
 
 	userResp, err := http.Get(userRequest.String())
