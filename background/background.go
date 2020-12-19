@@ -45,6 +45,7 @@ func (b *Background) Start(ctx context.Context) {
 			groupIDs := []string{"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"}
 			vkID := make(chan int, bufSize)
 			wg := sync.WaitGroup{}
+			b.app.Log.Info("before getting vk ids")
 			for _, id := range groupIDs {
 				offset := 0
 				wg.Add(1)
@@ -71,20 +72,25 @@ func (b *Background) sender(vkID chan int) {
 				return
 			}
 
+			b.app.Log.Info("getVkProfile")
 			profile, err := b.getVkProfile(id)
 			if err != nil {
 				continue
 			}
+
+			b.app.Log.Info("getVkGroup")
 			group, err := b.getVkGroup(id)
 			if err != nil {
 				continue
 			}
 
+			b.app.Log.Info("buildString")
 			str, err := b.buildString(profile, group)
 			if err != nil {
 				continue
 			}
 
+			b.app.Log.Info("Predict")
 			res, err := b.app.Vws.Predict(str)
 			if err != nil {
 				continue
