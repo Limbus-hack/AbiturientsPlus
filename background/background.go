@@ -206,6 +206,7 @@ func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.Wai
 		url = fmt.Sprintf(url, id, offset, b.app.Conf.VkServiceToken)
 		resp, err := http.Get(url)
 		if err != nil {
+			b.app.Log.Warn(err)
 			break
 		}
 
@@ -213,11 +214,13 @@ func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.Wai
 
 		var data models.VkIDModel
 		if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
+			b.app.Log.Warn(err)
 			break
 		}
 		resp.Body.Close()
 
 		if len(data.Response.Items) == 0 {
+			b.app.Log.Warn(err)
 			break
 		}
 
