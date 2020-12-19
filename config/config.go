@@ -13,7 +13,7 @@ type CommonEnvConfigs struct {
 	ServiceName string `json:"SERVICE_NAME" env:"SERVICE_NAME" envDefault:"rest-api-template"`
 
 	// Server configs
-	ServerPort string `json:"SERVER_PORT" env:"SERVER_PORT" envDefault:"8080"`
+	ServerPort string `json:"SERVER_PORT" env:"SERVER_PORT" envDefault:"8082"`
 
 	// PostgreSQL configs
 	PostgresURL      string `json:"POSTGRES_URL" env:"POSTGRES_URL" envDefault:"localhost"`

@@ -17,7 +17,6 @@ import (
 
 const (
 	bufSize = 100000
-	workers = 10
 )
 
 type Background struct {
@@ -45,9 +44,15 @@ func (b *Background) Start(ctx context.Context) {
 			//"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"
 			groupIDs := []string{"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"}
 			vkID := make(chan int, bufSize)
+			wg := sync.WaitGroup{}
 			for _, id := range groupIDs {
 				offset := 0
-				go b.getVkIDs(vkID, id, offset)
+				wg.Add(1)
+				go b.getVkIDs(vkID, id, offset, &wg)
+				go func() {
+					wg.Wait()
+					close(vkID)
+				}()
 			}
 
 			b.wg.Add(1)
@@ -186,7 +191,8 @@ func (b *Background) getVkProfile(id int) (*models.VkUserModel, error) {
 	return &data, nil
 }
 
-func (b *Background) getVkIDs(vkID chan int, id string, offset int) {
+func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.WaitGroup) {
+	defer wg.Done()
 	for {
 		url := "https://api.vk.com/method/groups.getMembers?group_id=%s&sort=id_asc&offset=%d&count=1000&v=5.126&access_token=%s"
 
@@ -212,6 +218,4 @@ func (b *Background) getVkIDs(vkID chan int, id string, offset int) {
 			vkID <- item
 		}
 	}
-
-	close(vkID)
 }
