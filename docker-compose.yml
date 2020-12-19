@@ -8,19 +8,31 @@ services:
     environment:
       POSTGRES_PASSWORD: postgres
       POSTGRES_USER: postgres
-      POSTGRES_DB: sites
+      POSTGRES_DB: vk_users
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql
 
-  postgres-adminer:
-    container_name: postgres-adminer-container
-    image: adminer
+  vowpal-wabbit:
+    container_name: vowpal-wabbit-container
+    image: vowpalwabbit/ubuntu1604-build
     restart: always
     ports:
-      - 8081:8081
+    - 58000:58000
+
+  vowpal-wabbit-run:
+    container_name: vowpal-wabbit-run
+    depends_on:
+      - vowpal-wabbit
+    restart: always
+    build:
+      context: .
+      dockerfile: Docker-vowel
 
   service:
     container_name: api-container
     depends_on:
       - postgres
+      - vowpal-wabbit
     build:
       context: .
       dockerfile: Dockerfile

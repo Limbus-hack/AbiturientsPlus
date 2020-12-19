@@ -3,9 +3,9 @@ package controller
 import (
 	"encoding/json"
 	"errors"
+  
 	"github.com/code7unner/vk-scrapper/internal/api/service"
 	"github.com/code7unner/vk-scrapper/internal/app"
-	"github.com/code7unner/vk-scrapper/vw"
 	"io/ioutil"
 	"net/http"
 	"strconv"
@@ -31,12 +31,7 @@ func (p PredictionCtrl) Get(w http.ResponseWriter, r *http.Request) {
 	}
 	r.Body.Close()
 
-	formatData, err := vw.FormatData(string(data))
-	if err != nil {
-		p.error(w, r, http.StatusInternalServerError, err)
-	}
-
-	predict, err := p.app.Vws.Predict(formatData)
+	predict, err := p.app.Vws.Predict(string(data))
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
@@ -51,8 +46,7 @@ func (p PredictionCtrl) GetWithFilter(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	city, _ := strconv.Atoi(keys[0])
-	//school := keys[1]
-	users, err := service.GetVkUsers(city, &p.app.Conf)
+	users, err := p.app.Repo.VkUsers.GetVkUsers(city)
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
