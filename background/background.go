@@ -33,16 +33,12 @@ func New(app *app.App) *Background {
 }
 
 func (b *Background) Start(ctx context.Context) {
-	ticker := time.NewTicker(time.Second * 1)
-	defer ticker.Stop()
-
 	for {
 		select {
 		case <-ctx.Done():
 			return
-		case <-ticker.C:
-			ticker.Stop()
-			groupIDs := []string{"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"}
+		default:
+			groupIDs := []string{"dayvinchik", "mudakoff", "smeyaka", "tnull", "typ_math", "club127619163"}
 			vkID := make(chan int, bufSize)
 			wg := sync.WaitGroup{}
 			for _, id := range groupIDs {
