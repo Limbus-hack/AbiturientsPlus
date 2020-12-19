@@ -96,6 +96,7 @@ func (b *Background) sender(vkID chan int) {
 
 			_, err = b.app.Repo.Users.Create(b.app.Ctx, user)
 			if err != nil {
+				b.app.Log.Warn(err)
 				continue
 			}
 		}

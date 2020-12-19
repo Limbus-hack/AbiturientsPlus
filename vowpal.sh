@@ -1,0 +1,1 @@
+vw -i vw.model --daemon --port 58000 --num_children 1 --oaa 3 --loss_function=logistic
