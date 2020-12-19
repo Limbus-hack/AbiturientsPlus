@@ -41,11 +41,9 @@ func (b *Background) Start(ctx context.Context) {
 			return
 		case <-ticker.C:
 			ticker.Stop()
-			//"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"
 			groupIDs := []string{"inf_bu", "ege_matn", "physics_100", "ege", "egeoge_math"}
 			vkID := make(chan int, bufSize)
 			wg := sync.WaitGroup{}
-			b.app.Log.Info("before getting vk ids")
 			for _, id := range groupIDs {
 				offset := 0
 				wg.Add(1)
@@ -72,25 +70,21 @@ func (b *Background) sender(vkID chan int) {
 				return
 			}
 
-			b.app.Log.Info("getVkProfile")
 			profile, err := b.getVkProfile(id)
 			if err != nil {
 				continue
 			}
 
-			b.app.Log.Info("getVkGroup")
 			group, err := b.getVkGroup(id)
 			if err != nil {
 				continue
 			}
 
-			b.app.Log.Info("buildString")
 			str, err := b.buildString(profile, group)
 			if err != nil {
 				continue
 			}
 
-			b.app.Log.Info("Predict")
 			res, err := b.app.Vws.Predict(str)
 			if err != nil {
 				continue
@@ -105,10 +99,9 @@ func (b *Background) sender(vkID chan int) {
 				Status:     "new",
 			}
 
-			b.app.Log.Info("got user")
 			_, err = b.app.Repo.Users.Create(b.app.Ctx, user)
 			if err != nil {
-				b.app.Log.Warn(err)
+				b.app.Log.Info(err)
 				continue
 			}
 		}
@@ -206,7 +199,6 @@ func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.Wai
 		url = fmt.Sprintf(url, id, offset, b.app.Conf.VkServiceToken)
 		resp, err := http.Get(url)
 		if err != nil {
-			b.app.Log.Warn(err)
 			break
 		}
 
@@ -214,13 +206,11 @@ func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.Wai
 
 		var data models.VkIDModel
 		if err := json.NewDecoder(resp.Body).Decode(&data); err != nil {
-			b.app.Log.Warn(err)
 			break
 		}
 		resp.Body.Close()
 
 		if len(data.Response.Items) == 0 {
-			b.app.Log.Warn(err)
 			break
 		}
 

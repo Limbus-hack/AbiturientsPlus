@@ -40,7 +40,5 @@ func (u usersImpl) Create(ctx context.Context, user *model.User) (int, error) {
 		return 0, err
 	}
 
-	u.log.Info("user inserted")
-
 	return id, nil
 }
