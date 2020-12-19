@@ -1,17 +1,30 @@
 package model
 
-type Item struct {
+type UserItem struct {
 	FirstName string `json:"first_name"`
-	Id        int64  `json:"id"`
 	LastName  string `json:"last_name"`
-	TrackCode string `json:"track_code"`
+	Sex       int    `json:"sex"`
+	Interests string `json:"interests"`
 }
 
-type Response struct {
-	Count int64  `json:"count"`
-	Item  []Item `json:"items"`
+type UserResponse struct {
+	Count int64      `json:"count"`
+	Items []UserItem `json:"items"`
 }
 
 type VkUsers struct {
-	Response Response `json:"response"`
+	Response UserResponse `json:"response"`
+}
+
+type SubscriptionItem struct {
+	Name string `json:"name"`
+}
+
+type SubscriptionsResponse struct {
+	Count             int64              `json:"count"`
+	SubscriptionItems []SubscriptionItem `json:"items"`
+}
+
+type VkUserSubscriptions struct {
+	SubscriptionsResponse SubscriptionsResponse
 }
