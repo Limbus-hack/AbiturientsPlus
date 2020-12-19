@@ -3,8 +3,7 @@ package controller
 import (
 	"encoding/json"
 	"errors"
-  
-	"github.com/code7unner/vk-scrapper/internal/api/service"
+
 	"github.com/code7unner/vk-scrapper/internal/app"
 	"io/ioutil"
 	"net/http"
