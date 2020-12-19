@@ -29,7 +29,7 @@ func main() {
 	}
 
 	// Init repository
-	r := repository.New(database.Conn, log)
+	r := repository.New(database.Conn, log, conf)
 
 	// Init app logic
 	a := app.New(log, conf, r, ctx)

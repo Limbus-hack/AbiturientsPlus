@@ -23,8 +23,10 @@ type CommonEnvConfigs struct {
 	PostgresDB       string `json:"POSTGRES_DB" env:"POSTGRES_DB" envDefault:"sites"`
 
 	// VK configs
-	VkAppID      int    `json:"VK_APP_ID" env:"VK_APP_ID"`
-	VkPrivateKey string `json:"VK_PRIVATE_KEY" env:"VK_PRIVATE_KEY"`
+	VkAppID        int    `json:"VK_APP_ID" env:"VK_APP_ID"`
+	VkPrivateKey   string `json:"VK_PRIVATE_KEY" env:"VK_PRIVATE_KEY"`
+	VkServiceToken string `json:"VK_SERVICE_TOKEN" env:"VK_SERVICE_TOKEN"`
+	VKClientToken  string `json:"VK_CLIENT_TOKEN" env:"VK_CLIENT_TOKEN"`
 }
 
 func GetCommonEnvConfigs() CommonEnvConfigs {
