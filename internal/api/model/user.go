@@ -1,14 +1,10 @@
 package model
 
-import (
-	"time"
-)
-
 type User struct {
-	ID        int `bson:"_id" json:"id,omitempty"`
-	Name      string
-	Surname   string
-	NickName  string
-	Email     string
-	CreatedAt time.Time
+	ID         int    `db:"id"`
+	Name       string `db:"name"`
+	LastName   string `db:"last_name"`
+	Region     int    `db:"region"`
+	Prediction int    `db:"prediction"`
+	Status     string `db:"status"`
 }

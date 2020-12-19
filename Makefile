@@ -1,7 +1,6 @@
 .PHONY: daemon_start
 daemon_start:
-	for port in 58000
-	do vw -i train-model/vw.model --daemon --port $port --num_children 1 --oaa 3 --loss_function=logistic done
+	vw -i train-model/vw.model --daemon --port 58000 --num_children 1 --oaa 3 --loss_function=logistic
 
 .PHONY: daemon_stop
 daemon_stop:

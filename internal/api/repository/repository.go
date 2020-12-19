@@ -7,13 +7,13 @@ import (
 )
 
 type RepoImpl struct {
-	Posts   Posts
+	Users   Users
 	VkUsers VkUsers
 }
 
 func New(db *pgx.Conn, log *zap.SugaredLogger, conf config.CommonEnvConfigs) *RepoImpl {
 	return &RepoImpl{
-		Posts:   NewPostsImpl(db, log),
+		Users:   NewUsersImpl(db, log),
 		VkUsers: NewVkUserImpl(conf),
 	}
 }

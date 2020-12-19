@@ -20,7 +20,7 @@ func New(ctx context.Context, conf config.CommonEnvConfigs) (*DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	defer db.Close(ctx)
+	//defer db.Close(ctx)
 
 	if err := db.Ping(ctx); err != nil {
 		return nil, err

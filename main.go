@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/code7unner/vk-scrapper/background"
 	"github.com/code7unner/vk-scrapper/config"
 	"github.com/code7unner/vk-scrapper/internal/api/handler"
 	"github.com/code7unner/vk-scrapper/internal/api/repository"
@@ -28,6 +29,7 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
+	defer database.Close(ctx)
 
 	// Init repository
 	r := repository.New(database.Conn, log, conf)
@@ -40,6 +42,10 @@ func main() {
 
 	// Init app logic
 	a := app.New(log, conf, r, ctx, v)
+
+	// Start background process
+	b := background.New(a)
+	go b.Start(ctx)
 
 	// Init handler
 	h := handler.New(a)
