@@ -45,12 +45,10 @@ func (p PredictionCtrl) GetInRealTime(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	city, _ := strconv.Atoi(keys[0])
-	//school := keys[1]
 	users, err := service.GetVkUsers(city, &p.app.Conf)
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
-	//userCount = utils.CountUsers(users)
 	subs, err := service.BulkGetVkUserSubs(users, &p.app.Conf)
 	if err != nil {
 		p.error(w, r, http.StatusInternalServerError, err)

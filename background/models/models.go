@@ -2,8 +2,11 @@ package models
 
 type VkIDModel struct {
 	Response struct {
-		Count int   `json:"count"`
-		Items []int `json:"items"`
+		Count int `json:"count"`
+		Items []struct {
+			ID    int `json:"id"`
+			Bdate string `json:"bdate"`
+		} `json:"items"`
 	} `json:"response"`
 }
 

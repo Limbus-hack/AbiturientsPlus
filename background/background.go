@@ -10,6 +10,7 @@ import (
 	"github.com/code7unner/vk-scrapper/internal/app"
 	"net/http"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -194,7 +195,7 @@ func (b *Background) getVkProfile(id int) (*models.VkUserModel, error) {
 func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.WaitGroup) {
 	defer wg.Done()
 	for {
-		url := "https://api.vk.com/method/groups.getMembers?group_id=%s&sort=id_asc&offset=%d&count=1000&v=5.126&access_token=%s"
+		url := "https://api.vk.com/method/groups.getMembers?group_id=%s&sort=id_asc&offset=%d&count=1000&fields=bdate&v=5.126&access_token=%s"
 
 		url = fmt.Sprintf(url, id, offset, b.app.Conf.VkServiceToken)
 		resp, err := http.Get(url)
@@ -215,7 +216,18 @@ func (b *Background) getVkIDs(vkID chan int, id string, offset int, wg *sync.Wai
 		}
 
 		for _, item := range data.Response.Items {
-			vkID <- item
+			date := strings.Split(item.Bdate, ".")
+			if len(date) != 3 {
+				break
+			}
+			d, err := strconv.Atoi(date[2])
+			if err != nil {
+				break
+			}
+			age := time.Now().Year() - d
+			if age >= 16 && age <= 18 {
+				vkID <- item.ID
+			}
 		}
 	}
 }
