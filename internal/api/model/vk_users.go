@@ -2,6 +2,7 @@ package model
 
 type UserItem struct {
 	FirstName string `json:"first_name"`
+	Id        int64  `json:"id"`
 	LastName  string `json:"last_name"`
 	Sex       int    `json:"sex"`
 	Interests string `json:"interests"`

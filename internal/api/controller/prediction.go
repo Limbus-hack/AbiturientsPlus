@@ -2,13 +2,16 @@ package controller
 
 import (
 	"encoding/json"
-
+	"errors"
+	"github.com/code7unner/vk-scrapper/internal/api/service"
 	"github.com/code7unner/vk-scrapper/internal/app"
 	"io/ioutil"
 	"net/http"
+	"strconv"
 )
 
 type PredictionController interface {
+	GetWithFilter(w http.ResponseWriter, r *http.Request)
 	Get(w http.ResponseWriter, r *http.Request)
 }
 
@@ -33,6 +36,27 @@ func (p PredictionCtrl) Get(w http.ResponseWriter, r *http.Request) {
 	}
 
 	p.respond(w, r, http.StatusOK, predict)
+}
+
+func (p PredictionCtrl) GetWithFilter(w http.ResponseWriter, r *http.Request) {
+	keys, _ := r.URL.Query()["city"]
+	if keys == nil {
+		p.error(w, r, http.StatusBadRequest, errors.New("city query is required"))
+		return
+	}
+	city, _ := strconv.Atoi(keys[0])
+	//school := keys[1]
+	users, err := service.GetVkUsers(city, &p.app.Conf)
+	if err != nil {
+		p.error(w, r, http.StatusInternalServerError, err)
+	}
+	//userCount = utils.CountUsers(users)
+	subs, err := service.BulkGetVkUserSubs(users, &p.app.Conf)
+	if err != nil {
+		p.error(w, r, http.StatusInternalServerError, err)
+	}
+
+	p.respond(w, r, http.StatusOK, subs)
 }
 
 // respond with error

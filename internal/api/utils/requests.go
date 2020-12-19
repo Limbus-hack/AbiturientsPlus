@@ -25,3 +25,20 @@ func (u UserRequest) String(q rune) string {
 		u.Fields,
 		string(q))
 }
+
+type SubsRequest struct {
+	Token    string
+	Endpoint string
+	Extended int
+	UserId   int64
+	Count    int
+}
+
+func (s SubsRequest) String() string {
+	return fmt.Sprintf("%s%d&user_id=%d&access_token=%s&count=%d&v=5.21",
+		s.Endpoint,
+		s.Extended,
+		s.UserId,
+		s.Token,
+		s.Count)
+}
