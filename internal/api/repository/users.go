@@ -28,7 +28,6 @@ func (u usersImpl) Create(ctx context.Context, user *model.User) (int, error) {
 		`values ($1, $2, $3, $4, $5, $6)`
 
 	var id int
-
 	err := u.db.QueryRow(
 		ctx,
 		sql,
@@ -47,27 +46,26 @@ func (u usersImpl) Create(ctx context.Context, user *model.User) (int, error) {
 }
 
 func (u usersImpl) Update(ctx context.Context, id int64, status string) (int, error) {
-	sql := `update users set status= $1 where id= $2`
+	sql := `update users set status = $1 where id = $2`
 
-	var UpdatedRows int
-
+	var updatedRows int
 	err := u.db.QueryRow(
 		ctx,
 		sql,
 		status,
 		id,
-	).Scan(&UpdatedRows)
+	).Scan(&updatedRows)
 	if err != nil {
 		return 0, err
 	}
 
-	u.log.Info(fmt.Sprintf("%d rows updated", UpdatedRows))
+	u.log.Info(fmt.Sprintf("%d rows updated", updatedRows))
 
-	return UpdatedRows, nil
+	return updatedRows, nil
 }
 
 func (u usersImpl) Retrieve(ctx context.Context, city int, school int) ([]model.User, error) {
-	sql := `select * from users where region= $1, prediction= $2`
+	sql := `select * from users where region = $1, prediction = $2`
 
 	var users []model.User
 
@@ -93,13 +91,13 @@ func (u usersImpl) Retrieve(ctx context.Context, city int, school int) ([]model.
 			&user.Status); err != nil {
 			return nil, err
 		}
-		users = append(users, user)
 		if err := rows.Err(); err != nil {
 			return nil, err
 		}
+		users = append(users, user)
 	}
 
-	u.log.Info("Retrieved rows")
+	u.log.Info("retrieved rows")
 
 	return users, nil
 }
