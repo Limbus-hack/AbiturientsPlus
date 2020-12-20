@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/code7unner/vk-scrapper/background"
 	"github.com/code7unner/vk-scrapper/config"
 	"github.com/code7unner/vk-scrapper/internal/api/handler"
 	"github.com/code7unner/vk-scrapper/internal/api/repository"
@@ -44,8 +43,8 @@ func main() {
 	a := app.New(log, conf, r, ctx, v)
 
 	// Start background process
-	b := background.New(a)
-	go b.Start(ctx)
+	//b := background.New(a)
+	//go b.Start(ctx)
 
 	// Init handler
 	h := handler.New(a)

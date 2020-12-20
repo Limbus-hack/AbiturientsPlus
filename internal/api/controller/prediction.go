@@ -81,7 +81,7 @@ func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
 
-	p.respond(w, r, http.StatusCreated, users)
+	p.respond(w, r, http.StatusOK, users)
 }
 
 func (p PredictionCtrl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
@@ -100,7 +100,7 @@ func (p PredictionCtrl) UpdateStatus(w http.ResponseWriter, r *http.Request) {
 		p.error(w, r, http.StatusInternalServerError, err)
 	}
 
-	p.respond(w, r, http.StatusCreated, rowsUpdated)
+	p.respond(w, r, http.StatusOK, rowsUpdated)
 }
 
 // respond with error
