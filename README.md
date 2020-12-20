@@ -11,9 +11,9 @@ You need installed:
 
 ## Project setup 
 
-1. `git clone https://github.com/Limbus-hack/vk-scrapper.git`
+1. `git clone https://github.com/Limbus-hack/AbiturientsPlus.git`
 2.  `create POSTGRESQL db`
-3. `cd vk-scrapper`
+3. `cd AbiturientsPlus`
 4. `psql -U username -d myDataBase -a -f init.sql`
 5. `make`
 7. Add __.env__ file
