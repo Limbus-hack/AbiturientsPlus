@@ -6,6 +6,7 @@ import (
 	"github.com/go-chi/chi"
 	"github.com/rs/cors"
 	"net/http"
+	"os"
 )
 
 type Handler struct {
@@ -24,7 +25,14 @@ func New(app *app.App) *Handler {
 	}).Handler)
 
 	ctrl := controller.New(app)
-	r.Handle("/static", http.StripPrefix("/static", http.FileServer(http.Dir("./public"))))
+	fs := http.FileServer(http.Dir("./public"))
+	r.Get("/*", func(w http.ResponseWriter, r *http.Request) {
+		if _, err := os.Stat("./public" + r.RequestURI); os.IsNotExist(err) {
+			http.StripPrefix(r.RequestURI, fs).ServeHTTP(w, r)
+		} else {
+			fs.ServeHTTP(w, r)
+		}
+	})
 	r.MethodFunc("GET", "/ping", ctrl.Vk.Ping)
 	r.MethodFunc("POST", "/prediction", ctrl.Prediction.Get)
 	r.MethodFunc("PATCH", "/status", ctrl.Prediction.UpdateStatus)
