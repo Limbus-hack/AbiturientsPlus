@@ -20,7 +20,7 @@ func New(app *app.App) *Handler {
 	r.Use(cors.New(cors.Options{
 		AllowedOrigins:   []string{"*"},
 		AllowCredentials: true,
-		AllowedMethods:   []string{"POST", "GET", "OPTIONS", "PUT", "DELETE"},
+		AllowedMethods:   []string{"POST", "GET", "OPTIONS", "PUT", "DELETE", "PATCH"},
 		AllowedHeaders:   []string{"Accept", "Content-Type", "Accept-Encoding", "Authorization"},
 	}).Handler)
 
