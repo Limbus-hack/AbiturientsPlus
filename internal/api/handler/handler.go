@@ -35,7 +35,7 @@ func New(app *app.App) *Handler {
 	})
 	r.MethodFunc("GET", "/ping", ctrl.Vk.Ping)
 	r.MethodFunc("POST", "/prediction", ctrl.Prediction.Get)
-	r.MethodFunc("PATCH", "/status", ctrl.Prediction.UpdateStatus)
+	r.MethodFunc("POST", "/status", ctrl.Prediction.UpdateStatus)
 	r.MethodFunc("GET", "/prediction", ctrl.Prediction.GetCached)
 
 	return &Handler{
