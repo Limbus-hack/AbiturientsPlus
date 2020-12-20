@@ -92,8 +92,7 @@ func (u usersImpl) Retrieve(ctx context.Context, city int, school int) ([]model.
 		queryRows = rows
 	}
 
-	var users []model.User
-
+	users := make([]model.User, 0)
 	for queryRows.Next() {
 		var user model.User
 		if err := queryRows.Scan(
