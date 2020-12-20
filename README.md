@@ -1,4 +1,4 @@
-# Abiturient+ Service
+# AbiturientPlus Service
 
 Service for finding potential abiturients using Machine Learning
 
