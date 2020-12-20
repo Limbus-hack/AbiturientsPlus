@@ -77,6 +77,7 @@ func (u usersImpl) Retrieve(ctx context.Context, city int, school int) ([]model.
 			return nil, err
 		}
 		defer rows.Close()
+
 		queryRows = rows
 	} else {
 		sql := `select * from users where prediction = $1`
