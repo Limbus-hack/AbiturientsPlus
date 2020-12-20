@@ -49,12 +49,12 @@ func (u usersImpl) Update(ctx context.Context, id int, status string) (int, erro
 	sql := `update users set status = $1 where id = $2`
 
 	var updatedRows int
-	err := u.db.QueryRow(
+	_, err := u.db.Exec(
 		ctx,
 		sql,
 		status,
 		id,
-	).Scan()
+	)
 	if err != nil {
 		return 0, err
 	}
