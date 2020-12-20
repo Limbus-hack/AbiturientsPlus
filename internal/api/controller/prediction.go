@@ -61,17 +61,19 @@ func (p PredictionCtrl) GetInRealTime(w http.ResponseWriter, r *http.Request) {
 }
 
 func (p PredictionCtrl) GetCached(w http.ResponseWriter, r *http.Request) {
+	var city int
 	params := r.URL.Query()
 	cityKey, ok := params["city"]
-	if !ok {
-		p.error(w, r, http.StatusBadRequest, errors.New("city query is required"))
+	if ok {
+		city, _ = strconv.Atoi(cityKey[0])
+	} else {
+		city = 0
 	}
 	schoolKey, ok := params["school"]
 	if !ok {
 		p.error(w, r, http.StatusBadRequest, errors.New("school query is required"))
 	}
 
-	city, _ := strconv.Atoi(cityKey[0])
 	school, _ := strconv.Atoi(schoolKey[0])
 
 	users, err := p.app.Repo.Users.Retrieve(p.app.Ctx, city, school)
