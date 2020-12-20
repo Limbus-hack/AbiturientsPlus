@@ -1,6 +1,6 @@
-# VkScrapper
+# Abiturient+ Service
 
-API of a simple online shop
+Service for finding potential abiturients using Machine Learning
 
 ## Requirements
 You need installed:
@@ -33,13 +33,17 @@ VK_CLIENT_TOKEN=example
 |-------|---------|-------------|
 | `prediction/` | `GET` | Retrieve Cached Predictions|
 
-Requiered query params:
+### Query params:
+
+#### Required:
 ```
-city=<integer>
 school=<string>
 ```
-
-GET response body:
+#### Optional:
+```
+city=<integer>
+```
+### GET response body:
 ```
 [
   {
@@ -56,7 +60,7 @@ GET response body:
 |-------|---------|-------------|
 | `status/` | `PATCH` | endpoint for updating user status|
 
-PATCH request body:
+### PATCH request body:
 ```
 {"id", "status"}
 ```
