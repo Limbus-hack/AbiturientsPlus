@@ -25,7 +25,7 @@ VK_PRIVATE_KEY=example
 VK_SERVICE_TOKEN=example
 VK_CLIENT_TOKEN=example
 ```
-8. `go build github.com/code7unner/vk-scrapper`
+8. `go run github.com/code7unner/vk-scrapper`
 
 ## END POINTS
 
